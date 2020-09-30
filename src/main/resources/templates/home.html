@@ -3,11 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <title>App demo</title>
+<link rel="stylesheet" type="text/css" href="/css/custom.css"/>
 </head>
-<body>
-<h1>Demonstration de l'exercice Isifid</h1>
+<body class="corp">
+<h1>Demonstration de l'exercice Isifid</h1><br>
 
-<h2 th:text= "'Resultat = ' + ${number}"></h2>
+<p><b>
+<p>Le endpoint retournera :</p>
+<p>- Un code http 400 si le nombre est négatif</p>
+
+<p>-  Le résultat de la suite Fibonacci jusqu’à ce nombre s’il est impair</p>
+
+<p>- La factorielle si ce nombre est pair et inférieur à 51</p>
+
+<p>- Le nombre si ce nombre est pair et supérieur à 50</p>
+</b></p><br>
+
+<p class="tex">Reponse en bas</p>
+
+<h2 th:text= "${number}"></h2>
 
 </body>
 </html>
