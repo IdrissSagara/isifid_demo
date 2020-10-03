@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.List;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class Utils {
@@ -18,10 +19,12 @@ public class Utils {
 		return myList;
 	}
 
-	public static int fact(int n) {
-		int res = 1;
-		for (int i = 1; i <= n; i++)
-			res = res * i;
-		return (res);
+	
+	public static BigInteger factorielleGrandNombre(int n) {
+	    BigInteger produit = BigInteger.ONE;
+	    BigInteger mul = BigInteger.ONE;
+	    for (int i = 1; i <= n; i++ , mul = mul.add(BigInteger.ONE))
+	        produit = produit.multiply(mul);
+	    return produit;
 	}
 }

@@ -1,5 +1,6 @@
 package com.isifid.demo.controllers;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +18,9 @@ public class PagesController {
 	
 	@GetMapping("/")
 	public String home(HttpServletRequest request) {
-		String name = request.getParameter("name") != null && !request.getParameter("name").isEmpty()
-				? request.getParameter("name") : "World";
-				
-		System.out.println("\n\n\n" + name + "\n\n\n");
 		
+		// String name = request.getParameter("name") != null && !request.getParameter("name").isEmpty()
+			//	? request.getParameter("name") : "World";
 		return "home";
 	}
 
@@ -30,10 +29,7 @@ public class PagesController {
 	@GetMapping("/{factor}")
 	public String home(@PathVariable String factor, ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
-		int res;
-		
-		//System.out.println("\n\n\n" + number + "\n\n\n");
-		int number = 0;
+		int res , number = 0;
 				
 		try {
 			number = Integer.parseInt(factor);
@@ -51,18 +47,17 @@ public class PagesController {
 			modelMap.put("number", res);
 				
 		} else if (number % 2 == 0 && number < 51) {
-			res = Utils.fact(number);
-			System.out.println(res);
-			modelMap.put("number", res);
+			BigInteger resFact = Utils.factorielleGrandNombre(number);
+			System.out.println(resFact);
+			modelMap.put("number", resFact);
 			
 		} else if (number % 2 != 0) {
 			
 			List<Integer> myArray = Utils.suiteFibonacci(number);
-			String maString = myArray.toString();
-			maString = maString.replace("[", "(");
-			maString = maString.replace("]", ")");
-			
-			modelMap.put("number", maString);
+			String myStringFormat = myArray.toString();
+			myStringFormat = myStringFormat.replace("[", "(");
+			myStringFormat = myStringFormat.replace("]", ")");
+			modelMap.put("number", myStringFormat);
 			
 		}
 		
