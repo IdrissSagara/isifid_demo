@@ -1,6 +1,6 @@
 package com.isifid.demo.controllers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import utils.Utils;
 
 @Controller
 public class PagesController {
@@ -27,57 +27,45 @@ public class PagesController {
 
 
 	
-	@GetMapping("/{number}")
-	public String home(@PathVariable int number, ModelMap modelMap,
+	@GetMapping("/{factor}")
+	public String home(@PathVariable String factor, ModelMap modelMap,
 			HttpServletRequest request, HttpServletResponse response) {
 		int res;
 		
 		//System.out.println("\n\n\n" + number + "\n\n\n");
+		int number = 0;
+				
+		try {
+			number = Integer.parseInt(factor);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			return "errorParsing";
+		}
 		
 		if (number < 0) {
 			// TODO: display a correct message 
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			
+			return "error404";
 		} else if (number % 2 == 0 && number > 50) {
 			res = number;
 			modelMap.put("number", res);
 				
 		} else if (number % 2 == 0 && number < 51) {
-			res = fact(number);
+			res = Utils.fact(number);
+			System.out.println(res);
 			modelMap.put("number", res);
 			
 		} else if (number % 2 != 0) {
 			
-			ArrayList<Integer> myArray;
-			myArray = suiteFibonacci(number);
-			System.out.println("number" + ":" + myArray);
-			modelMap.put("number", myArray);
+			List<Integer> myArray = Utils.suiteFibonacci(number);
+			String maString = myArray.toString();
+			maString = maString.replace("[", "(");
+			maString = maString.replace("]", ")");
+			
+			modelMap.put("number", maString);
 			
 		}
 		
 		return "home";
 	}
-	
-    public static int fact (int n) {
-        int f = 1;
-        for (int i=1; i<=n; i++)
-        f=f*i;
-        return(f);
-    }
-    
-    public static ArrayList<Integer> suiteFibonacci(int n) {
-    	int nbr1=0, nbr2=1, response = 0;
-    	ArrayList<Integer> myList = new ArrayList<Integer>();
-    	while (response < n) {
-    		response = nbr1 + nbr2;
-			nbr1 = nbr2;
-			nbr2 = response;
-			//tab = response;
-			myList.add(response);
-			System.out.println( ":" + myList);
-			
-		}
-    	return myList;
-    }
-
 }
